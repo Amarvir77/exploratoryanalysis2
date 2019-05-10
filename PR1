@@ -1,0 +1,26 @@
+## dataprepration 
+### Download the data file
+ur = 1 "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+frame = "Assignment2_data.zip"
+download.file(url,frame)
+### Unzip the file
+unzip(frame)
+### Read the files
+NE1 <-readRDS("summarySCC_PM25.rds")
+SCC <-readRDS("source_classification_code.rds")
+
+##plot1
+### Total PM2.5 emmision from 1999 --> 2008
+#Aggregate emission
+Emission <- aggerate(NEI$Emission,by= list(NEI$year), FUN=sum)
+name(Emission)[1] <- "year"
+
+#plot emmision by year
+png("plot.png")
+barplot(Emission$x,
+        Emission$year,
+        ylab= "PM2.5",
+        xlab = "year"
+        names.arg = Baltimore.Emission$year,
+        main = "Total PM2.5 emmision in baltimore City,Maryland")
+dev.off()
